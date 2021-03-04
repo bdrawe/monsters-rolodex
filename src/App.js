@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+
 import React , { Component } from 'react'
 import './App.css';
-
+import { CardList } from './components/CardList/cardList.component'
 //component is part of the react library
 //component also have built in methods. 
 
@@ -11,30 +11,24 @@ class App extends Component {
     super();
 
     this.state = {
-      monsters: [
-        {
-          name: "Zion",
-          id: "001"
-        },
-        {
-          name: "Addie",
-          id: "002"
-        },
-        {
-          name: "Bryce",
-          id: "003"
-        }
-      ]
-    }
+      monsters: []
+    };
+  }
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(users => this.setState({ monsters: users}));
   }
 
   render() {
     return (
       <div className='App'>
+      <CardList>
         {
           this.state.monsters.map(monsters => (
             <h1 key={monsters.id}> {monsters.name} </h1>
         ))}
+        </CardList>
       </div>
     )
   }
